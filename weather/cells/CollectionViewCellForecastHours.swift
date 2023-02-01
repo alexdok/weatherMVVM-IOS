@@ -60,12 +60,4 @@ class CollectionViewCellForecastHours: UICollectionViewCell {
         }
         task.resume()
     }
-//    func loadImage() {
-//
-//        network.loadImage(urlForImage: icon) { image in
-//            DispatchQueue.main.async {
-//                self.iconImage.image = image
-//            }
-//        }
-//    }
 }
