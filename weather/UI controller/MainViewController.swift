@@ -36,7 +36,7 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        spinnerLoadingIndicator.showLoading(onView: view)
+        spinnerLoadingIndicator.showLoading(onView: self.view)
         viewModel.viewIsReady()
         bindSubiewsToViewModel()
 
@@ -159,7 +159,8 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
         }
         findCityTF.text = nil
     }
-    
+
+    //MARK: bind
     func bindSubiewsToViewModel() {
         viewModel.weatherObjectData.bind { [weak self] data in
             guard let data = data, let self = self else {
@@ -188,8 +189,8 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
                 self?.imageForTemp.image = image
             }
         }
-
     }
+    
   // MARK: allerts
     func createAlertCityNotFound() {
         let alert = UIAlertController.init(title: "WARNING!", message: "bad symbols in search field", preferredStyle: .alert)

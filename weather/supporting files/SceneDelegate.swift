@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
 
         if let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as? MainViewController {
-            let networkManager = NetworkManagerImpl(mapper: MapWeatherToObjectImpl())
+            let networkManager = NetworkManagerImpl(mapper: MapWeatherToObjectImpl(), requestBilder: RequestBuilderImpl())
             mainVC.viewModel = ViewModel(networkManager: networkManager)
             window?.rootViewController = mainVC
         }
