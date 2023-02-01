@@ -85,13 +85,12 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func dailyForecastHideOrNotButtonPressed(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        forecastDayHoursCollection.reloadData()
         if sender.isSelected == true {
+            self.forecastDayHoursCollection.alpha = 0
+            self.forecastDayHoursCollection.isHidden = false
             forecastForFiveDaysButtonConstraintForHideOrNot.constant = containerForCollectionViewHours.bounds.height - 15
             dailyForecastButtonBottomConstraint.constant = 15
             dailyForecastButton.frame.size.height = 15
-            self.forecastDayHoursCollection.alpha = 0
-            self.forecastDayHoursCollection.isHidden = false
             UIView.animate(withDuration: 0.3) {
                 self.containerForCollectionViewHours.layoutIfNeeded()
                 self.forecastDayHoursCollection.alpha = 1
@@ -110,6 +109,9 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func forecastForFiveDaysHideOrNotButtonPressed(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        if data?.arrayOfCellsDays.count ?? 0 < 5 && sender.isSelected {
+            createAlertProblemsWithAPIForecast()
+        }
         if sender.isSelected {
             UIView.animate(withDuration: 0.3) {
                 self.windLabel.alpha = 0
