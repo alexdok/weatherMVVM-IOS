@@ -140,6 +140,7 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func findCityButtonPressed(_ sender: UIButton) {
         findCity()
+        visualBlurEffect.isHidden = false
         returnAnimate()
     }
     
