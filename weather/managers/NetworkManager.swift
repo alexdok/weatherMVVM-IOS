@@ -22,12 +22,7 @@ class NetworkManagerImpl: NetworkManager {
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         
         let nameCityOrCoordinate = nameLocationOrCoordinate(location: location, nameLocation: nameLocation)
-
-        let URLParams = [
-            "q": nameCityOrCoordinate,
-            "days": "6",
-            "key": Constants.weatherApiKey,
-        ]
+        let URLParams = createParamsForRequest(whithLocation: nameCityOrCoordinate, keyAPI: Constants.weatherApiKey)
         
         guard let request = requestBilder.createRequestFrom(url: Constants.url, params: URLParams) else { return }
 
@@ -61,6 +56,15 @@ class NetworkManagerImpl: NetworkManager {
             }
         }
         task.resume()
+    }
+    
+    func createParamsForRequest(whithLocation: String, keyAPI: String) -> [String: String] {
+        let URLParams = [
+            "q": whithLocation,
+            "days": "6",
+            "key": keyAPI,
+        ]
+        return URLParams
     }
     
     func nameLocationOrCoordinate(location: CLLocation?, nameLocation: String?) -> String {
