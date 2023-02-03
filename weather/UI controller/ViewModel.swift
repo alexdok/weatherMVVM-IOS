@@ -75,6 +75,9 @@ class ViewModel: NSObject {
     }
     
     private func setupLocationManager() {
+        if CLLocationManager.significantLocationChangeMonitoringAvailable() {
+            sendRequestForTemperature(in: nil, cityName: "new york")
+        }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         locationManager.requestAlwaysAuthorization()

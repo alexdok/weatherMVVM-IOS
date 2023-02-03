@@ -1,7 +1,7 @@
 import UIKit
 import CoreLocation
 
-final class MainViewController: UIViewController, CLLocationManagerDelegate {
+final class MainViewController: UIViewController {
     private let spinnerLoadingIndicator = ActivityIndicator()
     var data: ObjectWeatherData?
     var viewModel: ViewModel!
@@ -150,7 +150,7 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     func findCity() {
         if !viewModel.findCity(newCity: findCityTF.text) {
-            createAlertCityNotFound()
+            createAlertBadSymbolsInSerchField()
         }
         findCityTF.text = nil
     }
@@ -187,7 +187,7 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
     
   // MARK: allerts
-    func createAlertCityNotFound() {
+    func createAlertBadSymbolsInSerchField() {
         let alert = UIAlertController.init(title: "WARNING!", message: "bad symbols in search field", preferredStyle: .alert)
         let okAction = UIAlertAction.init(title: "OK", style: .cancel, handler: nil)
         alert.addAction(okAction)
