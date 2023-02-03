@@ -33,20 +33,20 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.citiesList.count
+        return viewModel?.citiesList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CityCollectionCells", for: indexPath) as? CityCollectionCells else { return UITableViewCell() }
 
-        cell.cityName.text = viewModel.citiesList[indexPath.row].localized()
+        cell.cityName.text = viewModel?.citiesList[indexPath.row].localized()
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let city = viewModel.citiesList[indexPath.row]
+        let city = viewModel?.citiesList[indexPath.row]
         findCityTF.text = city
         findCity()
         returnAnimate()
@@ -55,9 +55,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("Deleted")
-            viewModel.citiesList.remove(at: indexPath.row)
+            viewModel?.citiesList.remove(at: indexPath.row)
             self.changeCityTable.deleteRows(at: [indexPath], with: .automatic)
-            SaveSettingsManagerImpl.shared.saveCities(viewModel.citiesList)
+            SaveSettingsManagerImpl.shared.saveCities(viewModel?.citiesList ?? [])
         }
     }
 }

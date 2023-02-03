@@ -4,7 +4,7 @@ import CoreLocation
 final class MainViewController: UIViewController {
     private let spinnerLoadingIndicator = ActivityIndicator()
     var data: ObjectWeatherData?
-    var viewModel: ViewModel!
+    var viewModel: ViewModel?
     
     @IBOutlet weak var forecastDaysCollection: UICollectionView!
     @IBOutlet weak var forecastDayHoursCollection: UICollectionView!
@@ -37,7 +37,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
       
         spinnerLoadingIndicator.showLoading(onView: self.view)
-        viewModel.viewIsReady()
+        viewModel?.viewIsReady()
         bindSubiewsToViewModel()
 
         configureCollectionViews()
@@ -75,7 +75,7 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func myCityLocationButtonPressed(_ sender: UIButton) {
-        viewModel.viewIsReady()
+        viewModel?.viewIsReady()
         bindSubiewsToViewModel()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             self.spinnerLoadingIndicator.hideLoading()
@@ -149,7 +149,7 @@ final class MainViewController: UIViewController {
     }
     
     func findCity() {
-        if !viewModel.findCity(newCity: findCityTF.text) {
+        if !(viewModel?.findCity(newCity: findCityTF.text) ?? false) {
             createAlertBadSymbolsInSerchField()
         }
         findCityTF.text = nil
@@ -157,7 +157,7 @@ final class MainViewController: UIViewController {
 
     //MARK: bind
     func bindSubiewsToViewModel() {
-        viewModel.weatherObjectData.bind { [weak self] data in
+        viewModel?.weatherObjectData.bind { [weak self] data in
             guard let data = data, let self = self else {
                 return
             }
@@ -176,7 +176,7 @@ final class MainViewController: UIViewController {
                 self.forecastDayHoursCollection.reloadData()
             }
         }
-        viewModel.currentImageTemp.bind { [weak self] image in
+        viewModel?.currentImageTemp.bind { [weak self] image in
             guard let image = image else {
                 return
             }
