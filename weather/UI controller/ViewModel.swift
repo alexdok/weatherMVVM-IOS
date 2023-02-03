@@ -25,6 +25,7 @@ class ViewModel: NSObject {
     private let workWithAPI: NetworkManager
     private let settingsManager: SaveSettingsManager = SaveSettingsManagerImpl.shared
     private var isRequestOn = false
+    private var locationManagerIsRunng = false
     
     var weatherObjectData = Bindable<ObjectWeatherData?>(nil)
     var currentImageTemp = Bindable<UIImage?>(nil)
@@ -45,8 +46,13 @@ class ViewModel: NSObject {
 
     func viewIsReady() {
         setupLocationManager()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if self.locationManagerIsRunng == false {
+                self.sendRequestForTemperature(in: nil, cityName: "new york")
+            }
+        }
     }
-    
+        
     func updateCity(cityName: String?) {
         sendRequestForTemperature(in: nil, cityName: cityName)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -75,9 +81,6 @@ class ViewModel: NSObject {
     }
     
     private func setupLocationManager() {
-        if CLLocationManager.significantLocationChangeMonitoringAvailable() {
-            sendRequestForTemperature(in: nil, cityName: "new york")
-        }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         locationManager.requestAlwaysAuthorization()
@@ -127,6 +130,7 @@ extension ViewModel: CLLocationManagerDelegate {
         guard let location = locations.first, !isRequestOn else {
             return
         }
+        locationManagerIsRunng = true
         sendRequestForTemperature(in: location,cityName: nil)// do something with location
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             manager.stopUpdatingLocation()

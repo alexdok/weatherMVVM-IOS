@@ -170,7 +170,7 @@ final class MainViewController: UIViewController {
                 self.timeLabelCurrent.text = data.localTime.convertToString(format: .time)
                 self.feelsLikeLabel.text = "Feels like: \(data.tempFeelsLike) °C"
                 self.windLabel.text = "Wind: \(data.windMph) mph"
-                self.presureLabel.text = "Presure: \(data.presure)"
+                self.presureLabel.text = "Pressure: \(data.presure)"
                 self.spinnerLoadingIndicator.hideLoading()
                 self.forecastDaysCollection.reloadData()
                 self.forecastDayHoursCollection.reloadData()
