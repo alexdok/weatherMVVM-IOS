@@ -15,6 +15,8 @@
 		902B7B5B298AEB0D00C1BE22 /* RequestBilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7B5A298AEB0D00C1BE22 /* RequestBilder.swift */; };
 		902B7B5D298AEB6E00C1BE22 /* Dictionary+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7B5C298AEB6E00C1BE22 /* Dictionary+extension.swift */; };
 		902B7B5F298AEBE900C1BE22 /* URL+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902B7B5E298AEBE900C1BE22 /* URL+extension.swift */; };
+		902D311A298D1DDC0000B79C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 902D3119298D1DDC0000B79C /* FirebaseAnalytics */; };
+		902D311C298D1DEB0000B79C /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 902D311B298D1DEB0000B79C /* FirebaseCrashlytics */; };
 		906E73A82951E97700B6A40C /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E73A72951E97700B6A40C /* Bindable.swift */; };
 		90A88BAE2939E41B004C3316 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 90A88BAD2939E41B004C3316 /* GoogleService-Info.plist */; };
 		90B3C0B52952FA5E004630EC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C0B42952FA5E004630EC /* ViewModel.swift */; };
@@ -72,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				902D311A298D1DDC0000B79C /* FirebaseAnalytics in Frameworks */,
+				902D311C298D1DEB0000B79C /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,11 +99,19 @@
 			path = supportNetworkManager;
 			sourceTree = "<group>";
 		};
+		902D3118298D1DDC0000B79C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		90D1C6BC28F5508500F2EA88 = {
 			isa = PBXGroup;
 			children = (
 				90D1C6C728F5508500F2EA88 /* weather */,
 				90D1C6C628F5508500F2EA88 /* Products */,
+				902D3118298D1DDC0000B79C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,6 +221,8 @@
 			);
 			name = weather;
 			packageProductDependencies = (
+				902D3119298D1DDC0000B79C /* FirebaseAnalytics */,
+				902D311B298D1DEB0000B79C /* FirebaseCrashlytics */,
 			);
 			productName = weather;
 			productReference = 90D1C6C528F5508500F2EA88 /* weather.app */;
@@ -572,6 +586,19 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		902D3119298D1DDC0000B79C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90A88BAF2939E524004C3316 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		902D311B298D1DEB0000B79C /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90A88BAF2939E524004C3316 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 90D1C6BD28F5508500F2EA88 /* Project object */;
 }
