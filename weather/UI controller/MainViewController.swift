@@ -149,14 +149,8 @@ final class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func findCity() {
-        if findCityTF.text?.checkCityNameForValidate() == nil {
-            return
-        }
-       let cityName = findCityTF.text?.checkCityNameForValidate()
-        if cityName == "404"  {
+        if !viewModel.findCity(newCity: findCityTF.text) {
             createAlertCityNotFound()
-        } else {
-            viewModel.updateCity(cityName: cityName?.convertStringDellSpace())
         }
         findCityTF.text = nil
     }

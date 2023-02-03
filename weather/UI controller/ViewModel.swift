@@ -2,14 +2,13 @@ import UIKit
 import CoreLocation
 
 class FakeNetworkManager: NetworkManager {
+    
+    var isMethodCalled = false
+
     func sendRequestForTemperature(in location: CLLocation?, nameLocation: String?, completion: @escaping (ObjectWeatherData?) -> Void) {
         isMethodCalled = true
     }
     
-    var isMethodCalled = false
-    func sendRequestForTemperature(in location: CLLocation, completion: @escaping (ObjectWeatherData?) -> Void) {
-        isMethodCalled = true
-    }
     func loadImage(urlForImage: String, completion: @escaping (UIImage) -> Void) {
         isMethodCalled = true
     }
@@ -25,7 +24,8 @@ class ViewModel: NSObject {
     private let locationManager = CLLocationManager()
     private let workWithAPI: NetworkManager
     private let settingsManager: SaveSettingsManager = SaveSettingsManagerImpl.shared
-
+    private var isRequestOn = false
+    
     var weatherObjectData = Bindable<ObjectWeatherData?>(nil)
     var currentImageTemp = Bindable<UIImage?>(nil)
 
@@ -54,6 +54,19 @@ class ViewModel: NSObject {
         }
     }
     
+    func findCity(newCity: String?) -> Bool {
+        if newCity?.checkCityNameForValidate() == nil {
+            return true
+        }
+        let cityName = newCity?.checkCityNameForValidate()
+        if cityName == "404"  {
+            return false
+        } else {
+            updateCity(cityName: cityName?.convertStringDellSpace())
+        }
+        return true
+    }
+    
     func updateCitiesList() {
         guard let newCity = weatherObjectData.value?.city else { return }
         if !citiesList.contains(newCity) {
@@ -73,19 +86,22 @@ class ViewModel: NSObject {
    
         workWithAPI.sendRequestForTemperature(in: location, nameLocation: cityName) { objectData in
             self.isRequestOn = false
-            var modificationObjectData = objectData
-            
-            modificationObjectData?.arrayOfCellsTwentyFourHours = self.createArrayOfCellsHours(firstDayHours: objectData?.arrayOfCellsDays.first?.hour ?? [], nextDayHours: objectData?.arrayOfCellsDays[1].hour ?? [], lastUpdateTime: objectData?.lastUpdateTime ?? "")
-            
-            self.weatherObjectData.value = modificationObjectData
-         
+            self.weatherObjectData.value = self.modificationObjectDataForArrayOfCellsTwentyFourHours(objectData: objectData)
             self.workWithAPI.loadImage(urlForImage: objectData?.urlForCurrentImage ?? " ") { image in
                 self.currentImageTemp.value = image
             }
         }
     }
     
-    func createArrayOfCellsHours(firstDayHours:[Hours], nextDayHours: [Hours], lastUpdateTime: String ) -> [Hours] {
+   private func modificationObjectDataForArrayOfCellsTwentyFourHours(objectData: ObjectWeatherData?) -> ObjectWeatherData? {
+        var modificationObjectData = objectData
+        
+        modificationObjectData?.arrayOfCellsTwentyFourHours = self.createArrayOfCellsHours(firstDayHours: objectData?.arrayOfCellsDays.first?.hour ?? [], nextDayHours: objectData?.arrayOfCellsDays[1].hour ?? [], lastUpdateTime: objectData?.lastUpdateTime ?? "")
+        
+        return modificationObjectData
+    }
+    
+   private func createArrayOfCellsHours(firstDayHours:[Hours], nextDayHours: [Hours], lastUpdateTime: String ) -> [Hours] {
         var finalArrayfForNextTwentyFourHours: [Hours] = []
             for hour in firstDayHours {
                 if hour.time > lastUpdateTime {
@@ -100,7 +116,7 @@ class ViewModel: NSObject {
         return finalArrayfForNextTwentyFourHours
     }
 
-    var isRequestOn = false
+
 }
 
 extension ViewModel: CLLocationManagerDelegate {
