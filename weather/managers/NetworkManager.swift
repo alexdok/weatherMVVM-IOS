@@ -58,7 +58,7 @@ class NetworkManagerImpl: NetworkManager {
         task.resume()
     }
     
-    func createParamsForRequest(whithLocation: String, keyAPI: String) -> [String: String] {
+   private func createParamsForRequest(whithLocation: String, keyAPI: String) -> [String: String] {
         let URLParams = [
             "q": whithLocation,
             "days": "6",
@@ -67,7 +67,7 @@ class NetworkManagerImpl: NetworkManager {
         return URLParams
     }
     
-    func nameLocationOrCoordinate(location: CLLocation?, nameLocation: String?) -> String {
+    private func nameLocationOrCoordinate(location: CLLocation?, nameLocation: String?) -> String {
         var nameCityOrCoordinate = " "
         if let latitude = location?.coordinate.latitude,
           let longitude = location?.coordinate.longitude {
