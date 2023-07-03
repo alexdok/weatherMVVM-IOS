@@ -149,6 +149,7 @@ final class MainViewController: UIViewController {
     
     @IBAction func tapForReturn() {
         returnAnimate()
+        findCityTF.resignFirstResponder()
     }
     
     func findCity() {
