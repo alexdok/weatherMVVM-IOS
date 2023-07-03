@@ -13,6 +13,7 @@ protocol MapWeatherToObject {
 
 struct MapWeatherToObjectImpl: MapWeatherToObject {
     func map(_ weather: Weather) -> ObjectWeatherData? {
+        
         guard let forecast = weather.forecast else {
             return nil
         }

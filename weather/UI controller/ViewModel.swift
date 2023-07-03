@@ -121,8 +121,6 @@ class ViewModel: NSObject {
             }
         return finalArrayfForNextTwentyFourHours
     }
-
-
 }
 
 extension ViewModel: CLLocationManagerDelegate {

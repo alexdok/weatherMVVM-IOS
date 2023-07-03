@@ -66,7 +66,9 @@ extension MainViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         findCity()
         returnAnimate()
+        findCityTF.resignFirstResponder()
         textField.text = ""
         return true
     }
+    
 }

@@ -51,6 +51,9 @@ final class MainViewController: UIViewController {
         self.forecastDaysCollection.delegate = self
         self.forecastDayHoursCollection.dataSource = self
         self.forecastDayHoursCollection.delegate = self
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.forecastDayHoursCollection.reloadData()
+        }
     }
 
     private func configureBackground() {
@@ -152,6 +155,7 @@ final class MainViewController: UIViewController {
         if !(viewModel?.findCity(newCity: findCityTF.text) ?? false) {
             createAlertBadSymbolsInSerchField()
         }
+        findCityTF.resignFirstResponder()
         findCityTF.text = nil
     }
 
@@ -161,7 +165,6 @@ final class MainViewController: UIViewController {
             guard let data = data, let self = self else {
                 return
             }
-            
             self.data = data
             DispatchQueue.main.async {
                 self.cityLabel.text = data.city

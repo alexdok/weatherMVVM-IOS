@@ -28,7 +28,7 @@ extension String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
             guard let convertDate = dateFormatter.date(from: self) else { return "loading" }
-            dateFormatter.dateFormat = "dd.MMMM.yyyy"
+            dateFormatter.dateFormat = "dd MMMM yyyy"
             let newString = dateFormatter.string(from: convertDate)
             return newString
         case .time :
